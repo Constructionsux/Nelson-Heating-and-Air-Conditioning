@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nelson Heating and Air Conditioning | Madison</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-blue: #0056b3;
+            --accent-orange: #ff6b00;
+            --dark-gray: #222;
+            --light-gray: #f4f7f6;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .logo span { color: var(--accent-orange); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-orange);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--primary-blue); }
+
+        .cta-btn {
+            background: var(--accent-orange);
+            color: var(--white);
+            padding: 0.6rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .cta-btn:hover {
+            background: #e65c00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);
+        }
+
+        .hamburger { display: none; cursor: pointer; font-size: 1.5rem; }
+
+        /* --- HERO SECTION --- */
+        #home {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 86, 179, 0.8), rgba(0, 86, 179, 0.6)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 2rem;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background: var(--accent-orange);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+            transition: var(--transition);
+        }
+
+        .hero-btn:hover {
+            background: #fff;
+            color: var(--accent-orange);
+            transform: scale(1.05);
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- ABOUT SECTION --- */
+        #about { background-color: var(--light-gray); }
+        
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-img img {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .about-img img:hover { transform: scale(1.02); }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .about-text ul {
+            margin-top: 1.5rem;
+        }
+
+        .about-text li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-text li::before {
+            content: '✓';
+            color: var(--accent-orange);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* --- SERVICES SECTION --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border-bottom: 4px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-bottom: 4px solid var(--accent-orange);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 { margin-bottom: 1rem; color: var(--primary-blue); }
+
+        /* --- GALLERY SECTION --- */
+        #gallery { background-color: var(--light-gray); }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 86, 179, 0.8);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info-box {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 3rem;
+            border-radius: 10px;
+        }
+
+        .contact-info-box h3 { margin-bottom: 1.5rem; font-size: 1.8rem; }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item span { font-size: 1.5rem; }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+        }
+
+        .submit-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #004494;
+            transform: translateY(-2px);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--dark-gray);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                background: var(--white);
+                height: calc(100vh - 70px);
+                width: 70%;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active { right: 0; }
+            .hamburger { display: block; }
+            
+            .hero-content h1 { font-size: 2.5rem; }
+            .about-container, .contact-container { grid-template-columns: 1fr; }
+            .contact-info-box { order: 2; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <header>
+        <nav>
+            <div class="logo">Nelson <span>HVAC</span></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li><a href="#about" onclick="closeMenu()">About</a></li>
+                <li><a href="#services" onclick="closeMenu()">Services</a></li>
+                <li><a href="#gallery" onclick="closeMenu()">Gallery</a></li>
+                <li><a href="#contact" class="cta-btn" onclick="closeMenu()">Contact Us</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
+        </nav>
+    </header>
+
+    <!-- HOME PAGE / HERO SECTION -->
+    <section id="home">
+        <div class="hero-content">
+            <h1>Nelson Heating and Air Conditioning</h1>
+            <p>Providing top-quality heating and cooling solutions for Madison and surrounding areas. Comfort you can trust, service you can rely on.</p>
+            <a href="#contact" class="hero-btn">Get a Free Quote</a>
+        </div>
+    </section>
+
+    <!-- ABOUT PAGE / SECTION -->
+    <section id="about">
+        <div class="section-title animate-on-scroll">
+            <h2>About Us</h2>
+            <p>Dedicated to keeping your home comfortable all year round.</p>
+        </div>
+        <div class="about-container">
+            <div class="about-img animate-on-scroll">
+                <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=800&q=80" alt="HVAC Technician">
+            </div>
+            <div class="about-text animate-on-scroll">
+                <h3>Your Local Comfort Experts in Madison</h3>
+                <p>At Nelson Heating and Air Conditioning, we pride ourselves on delivering reliable, efficient, and affordable HVAC services. With years of experience, our certified technicians are equipped to handle everything from routine maintenance to complex installations.</p>
+                <ul>
+                    <li>Licensed and Insured Professionals</li>
+                    <li>Upfront, Honest Pricing</li>
+                    <li>24/7 Emergency Services Available</li>
+                    <li>100% Satisfaction Guarantee</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES PAGE / SECTION -->
+    <section id="services">
+        <div class="section-title animate-on-scroll">
+            <h2>Our Services</h2>
+            <p>Comprehensive heating and cooling solutions tailored to your needs.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon">❄️</div>
+                <h3>AC Installation & Repair</h3>
+                <p>Keep your home cool and comfortable with our expert air conditioning installation, repair, and tune-up services.</p>
+            </div>
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon">🔥</div>
+                <h3>Heating Services</h3>
+                <p>From furnace repairs to full heating system replacements, we ensure you stay warm during the cold Madison winters.</p>
+            </div>
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon">🛠️</div>
+                <h3>Preventive Maintenance</h3>
+                <p>Extend the lifespan of your HVAC system and improve efficiency with our comprehensive maintenance plans.</p>
+            </div>
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon">🌬️</div>
+                <h3>Air Quality Solutions</h3>
+                <p>Breathe easier with our air purification, humidifier, and duct cleaning services for a healthier home environment.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY PAGE / SECTION (Space for your job photos) -->
+    <section id="gallery">
+        <div class="section-title animate-on-scroll">
+            <h2>Our Recent Work</h2>
+            <p>Take a look at some of the jobs we've completed for our satisfied customers.</p>
+        </div>
+        <div class="gallery-grid">
+            <!-- Replace the 'src' links below with your own image files later (e.g., src="images/job1.jpg") -->
+            <div class="gallery-item animate-on-scroll">
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=600&q=80" alt="AC Installation Job">
+                <div class="gallery-overlay">New AC Unit Installation</div>
+            </div>
+            <div class="gallery-item animate-on-scroll">
+                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=80" alt="Furnace Repair">
+                <div class="gallery-overlay">Furnace Maintenance & Repair</div>
+            </div>
+            <div class="gallery-item animate-on-scroll">
+                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80" alt="Ductwork">
+                <div class="gallery-overlay">Commercial Ductwork Setup</div>
+            </div>
+            <div class="gallery-item animate-on-scroll">
+                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=600&q=80" alt="System Check">
+                <div class="gallery-overlay">Routine System Checkup</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT PAGE / SECTION -->
+    <section id="contact">
+        <div class="section-title animate-on-scroll">
+            <h2>Contact Us</h2>
+            <p>Ready to schedule a service or have a question? Reach out to us today!</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info-box animate-on-scroll">
+                <h3>Get In Touch</h3>
+                <div class="info-item">
+                    <span>📍</span>
+                    <div>
+                        <strong>Address:</strong><br>
+                        Madison, WI
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span>📞</span>
+                    <div>
+                        <strong>Phone:</strong><br>
+                        <a href="tel:7799709969" style="color: white; text-decoration: underline;">(779) 970-9969</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span>✉️</span>
+                    <div>
+                        <strong>Email:</strong><br>
+                        <a href="mailto:22neltran22@gmail.com" style="color: white; text-decoration: underline;">22neltran22@gmail.com</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span>🕒</span>
+                    <div>
+                        <strong>Hours:</strong><br>
+                        Mon - Fri: 8:00 AM - 6:00 PM<br>
+                        Sat: 9:00 AM - 2:00 PM<br>
+                        Sun: Emergency Only
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form animate-on-scroll" onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent. We will contact you shortly.');">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="tel" placeholder="Your Phone Number" required>
+                <select style="width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;">
+                    <option value="">Select a Service</option>
+                    <option value="ac-repair">AC Repair / Installation</option>
+                    <option value="heating">Heating Repair / Installation</option>
+                    <option value="maintenance">Preventive Maintenance</option>
+                    <option value="other">Other</option>
+                </select>
+                <textarea rows="5" placeholder="Tell us about your project or issue..." required></textarea>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 Nelson Heating and Air Conditioning. All Rights Reserved.</p>
+        <p>Serving Madison and surrounding areas with pride.</p>
+    </footer>
+
+    <!-- JAVASCRIPT FOR ANIMATIONS & MOBILE MENU -->
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('active');
+        }
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Smooth Scrolling for anchor links (fallback for older browsers)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
